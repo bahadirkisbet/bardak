@@ -1,8 +1,5 @@
 # bardak
 
-> **bardak** — Turkish for *glass*. In a few Slavic languages, *bardak* means *chaos*.
-> This is the joke: a pack of skills for taming the chaos that creeps into a codebase.
-
 `bardak` is a [Claude Code](https://claude.com/claude-code) plugin: a small set of
 skills that encode the reflexes a senior engineer applies *before* shipping —
 disciplined scrutiny, honest verification, and structural restraint. Each skill is a
