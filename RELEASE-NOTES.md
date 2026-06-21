@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.1.1 (2026-06-22)
+
+Maintenance — version bump only, no skill changes. First run of the `dev` → `main`
+release flow, which also exercises the plugin upgrade path for installers
+(`claude plugin marketplace update bardak`).
+
 ## v0.1.0 (2026-06-22)
 
 Initial release. Eight skills, packaged as a Claude Code marketplace plugin.
