@@ -1,6 +1,6 @@
 ---
 name: less-is-more
-description: Use before committing to any architecture, design, or non-trivial technical direction — when the user asks "how should we build X", proposes a system or feature, or faces a structural decision. Surfaces explicit paths and business-grounded tradeoffs, and learns the business each time so future calls align better.
+description: Use before committing to any architecture, design, or non-trivial technical direction — when the user asks how to build or structure something, proposes a system or feature, or faces a hard-to-reverse structural decision. Not for localized code style or a single function's implementation.
 ---
 
 # Less Is More
@@ -69,3 +69,5 @@ Over many uses this note turns "I don't know the business" into "I know this bus
 - Pretending to know the business — hiding blind spots instead of flagging them.
 - Skipping Step 5 — a session that taught you nothing persistent wasted the skill.
 - Reading "less" as "fewest lines." Here "less" means fewer moving parts and less you will regret, decided against the business.
+
+**Required next:** when the chosen path is significant and hard to reverse, record it with `bardak:adr` — its Context and Options sections draw on the paths and business context from this skill.

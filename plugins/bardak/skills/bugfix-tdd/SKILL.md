@@ -1,6 +1,6 @@
 ---
 name: bugfix-tdd
-description: Use when fixing any bug — write a test that reproduces the bug and FAILS first, then fix it, then confirm the test goes green. No fix without a failing test that proves it.
+description: Use when fixing any bug, regression, or "it does the wrong thing" report. Not for net-new features (ordinary TDD) or pure behavior-preserving refactors.
 ---
 
 # Bugfix TDD
@@ -8,6 +8,10 @@ description: Use when fixing any bug — write a test that reproduces the bug an
 A bug fix without a failing test that reproduces it is a guess. Reproduce first — a red test that captures the bug — then fix until it is green. The test is the proof the bug existed and the guard that it stays fixed.
 
 **Announce at start:** "Reproducing the bug with a failing test before fixing."
+
+## Iron Law
+
+**NO BUG FIX WITHOUT A TEST THAT REPRODUCES THE BUG AND FAILS FIRST.**
 
 ## When to Use
 
@@ -34,6 +38,15 @@ Make the minimal change that turns the test green. Don't expand scope; don't fix
 - The surrounding suite still passes — the fix didn't break a neighbor.
 - Re-read the diff: did you fix the cause, or paper over the symptom just enough to make the test pass?
 
+## Red Flags — STOP
+
+| Thought | Reality |
+|---|---|
+| "I see the bug — I'll just fix it" | Then you have no proof it was the bug, or that it stays fixed. Red test first. |
+| "I'll add the test after the fix" | After means never, and a test written green never proves it catches the bug. |
+| "It's too hard to write a test for this" | Then you don't understand the bug yet. Keep digging. |
+| "The fix is obvious" | Obvious fixes paper over symptoms. The failing test keeps you honest. |
+
 ## Common Mistakes
 
 - Fixing first, adding a test after (or never) — you lose the proof the test catches the bug.
@@ -41,3 +54,5 @@ Make the minimal change that turns the test green. Don't expand scope; don't fix
 - A test that fails for the wrong reason — verify the failure mode first.
 - Expanding the fix beyond what the test demands.
 - Skipping the full-suite run — confirm the fix didn't regress a neighbor.
+
+**Required next:** `bardak:no-silent-errors` (don't let the fix add a silent failure) and `bardak:pipeline-verification` (verify the fix end to end, not just the new unit test).

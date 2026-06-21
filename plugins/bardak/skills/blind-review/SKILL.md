@@ -1,6 +1,6 @@
 ---
 name: blind-review
-description: Use when a major implementation is complete and per-task reviews have passed — the final quality gate before merge. Dispatches independent reviewers that see ONLY the spec, never how the code was built.
+description: Use when a major implementation is complete and per-task reviews have passed, before merging a multi-file feature or a finished plan — the final quality gate. Not for single-file fixes, docs-only changes, or behavior-preserving refactors.
 ---
 
 # Blind Review
@@ -74,3 +74,5 @@ Combine the reports. Deduplicate. Prioritize:
 - Trusting a "zero findings" report without checking the reviewer read real files.
 - Running it on trivial changes — reserve it for the final gate on real features.
 - Skipping the re-run after fixing Critical findings.
+
+**Pairs with:** `bardak:verify-the-premise` (verify each finding against real behavior before acting) and `bardak:pipeline-verification` (confirm fixes end to end before merge).

@@ -1,6 +1,6 @@
 ---
 name: retrospective
-description: Use when ending a long session, when the user says /retro or /retrospective, or after a session with multiple corrections, friction, or workarounds — extracts non-obvious lessons and persists them so the same friction does not repeat.
+description: Use when ending a long session, when the user says /retro or /retrospective, or after a session with multiple corrections, friction, or workarounds. Not for short sessions with no friction.
 ---
 
 # Retrospective
@@ -79,3 +79,5 @@ Wait for user approval before applying.
 - Claiming findings are saved without tool verification.
 - Dropping the structured format under time pressure.
 - Ignoring the two-pass rule — one-off corrections rarely warrant persistence.
+
+**Pairs with:** business facts you learn belong in `bardak:less-is-more`'s `.claude/business-context.md`; durable decisions belong in a `bardak:adr`.

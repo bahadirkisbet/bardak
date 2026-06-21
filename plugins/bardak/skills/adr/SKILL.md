@@ -1,6 +1,6 @@
 ---
 name: adr
-description: Use when making or revisiting a significant, hard-to-reverse technical decision, or when the user says /adr — capture the decision, its context, the options weighed, and the consequences as a short Architecture Decision Record. Also use to search existing ADRs before re-deciding.
+description: Use when making or revisiting a significant, hard-to-reverse technical decision (framework, data model, service boundary, protocol, build-vs-buy), or when the user says /adr. Also use before re-deciding something — to check existing ADRs first.
 ---
 
 # ADR — Architecture Decision Records
@@ -57,3 +57,5 @@ What becomes easier, what becomes harder, what we now have to live with. The cos
 - Skipping the search and re-deciding something already settled.
 - A consequences section that lists only benefits.
 - Novel-length ADRs nobody will read — keep it to one screen.
+
+**Pairs with:** `bardak:less-is-more` — its path analysis and `.claude/business-context.md` feed this ADR's Context and Options sections.

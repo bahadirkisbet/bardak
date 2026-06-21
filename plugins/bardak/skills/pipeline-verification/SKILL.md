@@ -1,6 +1,6 @@
 ---
 name: pipeline-verification
-description: Use after any change, before calling it done — a change is not verified by unit tests alone. Trace what else it touches and verify end to end through the real user-visible pipeline.
+description: Use after any change, before calling it done or claiming it works — especially a change that touches shared code, a contract, or a user-visible path. Triggers whenever you are tempted to rely on unit tests alone.
 ---
 
 # Pipeline Verification
@@ -8,6 +8,10 @@ description: Use after any change, before calling it done — a change is not ve
 A passing unit test means a unit works. It does not mean the change works, and it does not mean the change didn't break something else. Verify end to end, through the path a user actually exercises, and trace what else the change can reach.
 
 **Announce at start:** "Verifying end to end, not just unit tests."
+
+## Iron Law
+
+**"TESTS PASS" / "IT COMPILED" / "CONTAINER STARTED" IS NOT "IT WORKS".**
 
 ## The Two Questions
 
@@ -39,6 +43,15 @@ State exactly what you verified and how, and what you did NOT.
 - "Not verified: W — couldn't run it because …; residual risk is …"
 - If a required check can't run, give the exact command and the blocker. Never imply coverage you don't have.
 
+## Red Flags — STOP
+
+| Thought | Reality |
+|---|---|
+| "Unit tests are green, so it works" | Units work. The feature and its neighbors are unverified. |
+| "It compiled / the container started" | That's a precondition, not verification. Exercise the real path. |
+| "The change is local — nothing else is affected" | Trace the blast radius before believing that. |
+| "The frontend/consumer probably still works" | You changed a contract; assume nothing across it — check it. |
+
 ## Common Mistakes
 
 - Treating green unit tests as proof the feature works.
@@ -46,3 +59,5 @@ State exactly what you verified and how, and what you did NOT.
 - Ignoring blast radius — fixing A, silently breaking B that shared the path.
 - "Container started" / "compiles" reported as "done."
 - Claiming end-to-end coverage that was never actually run.
+
+**Pairs with:** `bardak:verify-the-premise` (report observed data, not assumed coverage); invoked by `bardak:bugfix-tdd` and `bardak:blind-review` before calling work done.

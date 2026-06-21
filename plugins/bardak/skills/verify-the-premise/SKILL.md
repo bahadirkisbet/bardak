@@ -1,6 +1,6 @@
 ---
 name: verify-the-premise
-description: Use constantly — before acting on, suggesting, or deciding anything that rests on an assumption. Never assume; verify with data first. Triggers whenever you are about to act on a claim, a review finding, a doc, a remembered fact, or your own belief about how the code behaves.
+description: Use constantly — whenever you are about to act on, suggest, or decide something that rests on an assumption: a claim, a review finding, a doc, a remembered fact, a ticket, or your own belief about how the code behaves.
 ---
 
 # Verify the Premise
@@ -8,6 +8,10 @@ description: Use constantly — before acting on, suggesting, or deciding anythi
 Never assume. Decide, suggest, and act on **data** — observed behavior, real code, actual output — not on what you or anyone expects to be true.
 
 This is a behavior, not a step you do once. Before you act on a belief, ask: **do I know this, or am I assuming it?** If assuming, verify first.
+
+## Iron Law
+
+**NEVER ACT ON AN ASSUMPTION — READ IT, RUN IT, OR TRACE IT FIRST.**
 
 ## The Rule
 
@@ -31,6 +35,16 @@ A premise and a conclusion can each be independently right or wrong. A correct c
 
 Say so. State the assumption explicitly, what would confirm it, and the risk if it's wrong — then let the decision account for the uncertainty. An unverifiable premise that is flagged is safe; an unverified premise acted on silently is the failure.
 
+## Red Flags — STOP
+
+| Thought | Reality |
+|---|---|
+| "I'm pretty sure this function does X" | Pretty sure is a guess. Read it. |
+| "The docs/comment say it works this way" | Docs drift from code. Trust the code. |
+| "The lower layer already handles it" | Confirm which layer, on THIS path, before relying on it. |
+| "This branch is obviously dead" | Confirm what this source actually emits before deleting it. |
+| "It worked last time, so it works now" | Last time is not this time. Observe it. |
+
 ## Common Mistakes
 
 - Acting on a remembered API/signature instead of reading the current one.
@@ -38,3 +52,5 @@ Say so. State the assumption explicitly, what would confirm it, and the risk if 
 - Predicting output instead of running and observing it.
 - Generalizing ("X usually does Y") onto THIS specific case without checking it.
 - Letting a confident claim substitute for evidence — confidence is not data.
+
+**Pairs with:** `bardak:blind-review` and `bardak:pipeline-verification` (verify each finding and the real path before acting), and `bardak:no-silent-errors` (confirm a fault path is real, not assumed).

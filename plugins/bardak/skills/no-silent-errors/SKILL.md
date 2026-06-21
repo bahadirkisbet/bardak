@@ -1,6 +1,6 @@
 ---
 name: no-silent-errors
-description: Use constantly — whenever writing, reviewing, or changing any code that can fail, return, or branch on an error. Every error, failure, and fault path must be visible. Strong types first. Triggers on almost any implementation or review.
+description: Use constantly — whenever writing, reviewing, or changing any code that can fail, return, raise, or branch on an error, or when defining a type or a data boundary. Triggers on almost any implementation or review.
 ---
 
 # No Silent Errors
@@ -8,6 +8,10 @@ description: Use constantly — whenever writing, reviewing, or changing any cod
 Every error, failure, and fault path must be visible. No swallowed exceptions, no empty defaults standing in for missing required data, no fail-open. The strongest enforcement is not a runtime check — it is a type that makes the silent failure impossible to express.
 
 This is a reflex, not an occasional pass. Apply it to almost every change.
+
+## Iron Law
+
+**IF IT CAN FAIL UNNOTICED, IT IS A BUG — EVERY ERROR PATH STAYS VISIBLE.**
 
 ## The Reflex
 
@@ -40,6 +44,16 @@ The rule targets **required** data and **broken contracts** — not correct boun
 - The defect is a *required* value silently becoming empty, or an error path quietly producing a plausible-but-wrong result.
 - Do not convert correct optional-boundary handling into hard failures by reflex.
 
+## Red Flags — STOP
+
+| Thought | Reality |
+|---|---|
+| "I'll just catch it and log" | A log nobody reads is still silent. Re-raise, wrap, or fail. |
+| "An empty default keeps it from crashing" | It crashes later, with less context. Fail at the boundary instead. |
+| "It's probably never null here" | "Probably" is not a type. Make it `Optional` and handle it. |
+| "Typing this is too much ceremony" | The type is cheaper than the 2am page when the value is wrong. |
+| "Catch broad `Exception` so the flow survives" | The flow doesn't survive — it limps on corrupt state. |
+
 ## Common Mistakes
 
 - `try/except: pass` (or `catch {}`) — the canonical silent failure.
@@ -47,4 +61,5 @@ The rule targets **required** data and **broken contracts** — not correct boun
 - One nullable return overloaded to mean both "no data" and "it failed."
 - `assert` for validating external/persisted data (disabled under optimization).
 - Stringly-typed boundaries (`any` / `dict` / `str`) where a parsed type would have caught the error.
-- Catching broad `Exception` to keep a flow "from crashing" — it crashes later, with less context.
+
+**Pairs with:** `bardak:verify-the-premise` (confirm a fault path is real before trusting it), and applies during `bardak:bugfix-tdd` (don't let the fix introduce a silent failure).
