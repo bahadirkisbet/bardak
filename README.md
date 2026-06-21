@@ -1,9 +1,10 @@
 # bardak
 
 `bardak` is a [Claude Code](https://claude.com/claude-code) plugin: a small set of
-skills that encode the reflexes a senior engineer applies *before* shipping —
-disciplined scrutiny, honest verification, and structural restraint. Each skill is a
-short, opinionated procedure Claude follows when the moment calls for it.
+skills for people who spend serious time in Claude Code. They encode the reflexes that
+keep its output honest on real work — disciplined scrutiny, honest verification, and
+structural restraint. Each skill is a short, opinionated procedure Claude follows when
+the moment calls for it.
 
 ## The skills
 
