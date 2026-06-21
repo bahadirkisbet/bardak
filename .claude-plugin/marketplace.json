@@ -1,0 +1,30 @@
+{
+  "name": "bardak",
+  "owner": {
+    "name": "Bahadir Kisbet",
+    "url": "https://github.com/bahadirkisbet"
+  },
+  "metadata": {
+    "description": "bardak — a senior engineer's disciplined-scrutiny reflexes, as installable Claude Code skills.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "bardak",
+      "source": "./plugins/bardak",
+      "description": "Blind review, retrospective, less-is-more architecture, no silent errors, verify the premise, pipeline verification, bugfix TDD.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Bahadir Kisbet",
+        "url": "https://github.com/bahadirkisbet"
+      },
+      "license": "MIT",
+      "keywords": [
+        "code-review",
+        "quality",
+        "architecture",
+        "verification"
+      ]
+    }
+  ]
+}

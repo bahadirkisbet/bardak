@@ -1,0 +1,21 @@
+{
+  "name": "bardak",
+  "version": "0.1.0",
+  "description": "A senior engineer's disciplined-scrutiny reflexes as Claude Code skills: blind review, retrospective, less-is-more architecture, no silent errors, verify the premise, end-to-end pipeline verification, and bugfix TDD.",
+  "author": {
+    "name": "Bahadir Kisbet",
+    "url": "https://github.com/bahadirkisbet"
+  },
+  "homepage": "https://github.com/bahadirkisbet/bardak",
+  "repository": "https://github.com/bahadirkisbet/bardak",
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "quality",
+    "architecture",
+    "discipline",
+    "verification",
+    "retrospective",
+    "skills"
+  ]
+}

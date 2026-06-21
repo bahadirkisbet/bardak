@@ -1,0 +1,50 @@
+---
+name: no-silent-errors
+description: Use constantly — whenever writing, reviewing, or changing any code that can fail, return, or branch on an error. Every error, failure, and fault path must be visible. Strong types first. Triggers on almost any implementation or review.
+---
+
+# No Silent Errors
+
+Every error, failure, and fault path must be visible. No swallowed exceptions, no empty defaults standing in for missing required data, no fail-open. The strongest enforcement is not a runtime check — it is a type that makes the silent failure impossible to express.
+
+This is a reflex, not an occasional pass. Apply it to almost every change.
+
+## The Reflex
+
+For every value, call, and branch, ask: **how does this fail, and would I see it?** If a failure can pass unnoticed, fix it — preferably with types.
+
+## Strong Types First (primary mechanism)
+
+Make illegal states unrepresentable; then the silent failure cannot compile.
+
+- Model presence/absence in the type — `Optional` / `Maybe`, not a magic empty string or `-1`.
+- Make failure a value: a typed result (`Result` / `Either`) or a typed exception — not `None` meaning both "error" and "empty".
+- No `any` / `unknown` leaking across a boundary. Parse to a typed shape at the edge; downstream code reads typed values directly.
+- Exhaustive handling — `match` / discriminated unions the compiler checks, so a new error variant forces a new branch instead of falling through.
+- Distinct types for distinct things (a `UserId` is not a bare `str`), so a wrong value is a type error, not a runtime surprise.
+
+## Then Runtime Visibility
+
+Where types cannot reach:
+
+- No bare `except:` / `catch {}` that drops the error. Catch the specific case, then re-raise, wrap, or log-and-fail.
+- Validate required external/persisted data at the write/entry boundary and raise on violation — an explicit exception, not `assert` (asserts can be compiled out).
+- Fail loud and fast on broken contracts. A missing required config aborts startup; it does not default to empty.
+- Log the cause at the point of failure with enough context to act on.
+
+## Required vs Genuinely Optional
+
+The rule targets **required** data and **broken contracts** — not correct boundary modeling.
+
+- Returning `None` / `[]` / `""` for a genuinely optional or boundary value (no next item at a list edge, an absent optional field) is correct domain modeling, not a silent failure.
+- The defect is a *required* value silently becoming empty, or an error path quietly producing a plausible-but-wrong result.
+- Do not convert correct optional-boundary handling into hard failures by reflex.
+
+## Common Mistakes
+
+- `try/except: pass` (or `catch {}`) — the canonical silent failure.
+- An empty default for required config/input instead of failing at startup/entry.
+- One nullable return overloaded to mean both "no data" and "it failed."
+- `assert` for validating external/persisted data (disabled under optimization).
+- Stringly-typed boundaries (`any` / `dict` / `str`) where a parsed type would have caught the error.
+- Catching broad `Exception` to keep a flow "from crashing" — it crashes later, with less context.
