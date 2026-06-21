@@ -12,7 +12,7 @@
     {
       "name": "bardak",
       "source": "./plugins/bardak",
-      "description": "Blind review, retrospective, less-is-more architecture, no silent errors, verify the premise, pipeline verification, bugfix TDD.",
+      "description": "Blind review, retrospective, less-is-more architecture, no silent errors, verify the premise, pipeline verification, bugfix TDD, ADR.",
       "version": "0.1.0",
       "author": {
         "name": "Bahadir Kisbet",
