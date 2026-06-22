@@ -1,5 +1,29 @@
 # Release Notes
 
+## v0.3.0 (2026-06-22)
+
+**`blind-review` gains review modes.** It was spec-only; it now runs in one of three
+modes, chosen by which *intent artifact* the reviewer is handed:
+
+- **No context** (default) — nothing but the code: a cold soundness audit (bugs,
+  security, data safety).
+- **Spec** — the original requirements: the compliance gap (was the right thing built?).
+- **Plan-vs-code** — the intended implementation plan: drift detection (did the build
+  follow the design?).
+
+The invariant that makes it "blind" is unchanged and now explicit: the reviewer **never**
+sees the implementer's account of the work. Modes differ only in which statement-of-intent
+(none / spec / plan) they judge against — never a post-hoc "what I did" narrative. A focused
+routing eval confirmed the broader description doesn't regress: blind-review held 5/5 recall
+(including the new plan-vs-code and cold-audit phrasings) with zero false fires, and no
+adjacent skill (pipeline-verification, less-is-more, adr) was stolen.
+
+**Codex is now a first-class install.** Codex CLI (≥ 0.139) reads the same
+`marketplace.json` as Claude Code, so the install is the same two steps on each
+(`codex plugin marketplace add … && codex plugin add bardak@bardak`). README documents
+both; `docs/codex.md` promotes the marketplace path and keeps manual `.codex/skills/`
+vendoring as a fallback. README also now states ADRs live in `docs/adr/`.
+
 ## v0.2.0 (2026-06-22)
 
 **New skill: `more-is-less`** — the disciplined counterweight to `less-is-more`. When a
