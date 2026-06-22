@@ -1,6 +1,6 @@
 ---
 name: verify-the-premise
-description: Use constantly — whenever you are about to act on, suggest, or decide something that rests on an assumption: a claim, a review finding, a doc, a remembered fact, a ticket, or your own belief about how the code behaves.
+description: Use whenever you are about to act on, suggest, or decide something that rests on an unverified assumption — a claim, a review finding, a doc or comment, a remembered API, a ticket, or your own belief about how the code behaves. The reflex: before acting on a belief, confirm it by reading, running, or tracing. Distinct from verifying that a finished change works end to end (that is pipeline-verification).
 ---
 
 # Verify the Premise

@@ -1,6 +1,6 @@
 ---
 name: adr
-description: Use when making or revisiting a significant, hard-to-reverse technical decision (framework, data model, service boundary, protocol, build-vs-buy), or when the user says /adr. Also use before re-deciding something — to check existing ADRs first.
+description: Use to record or document a significant, hard-to-reverse technical decision that has been made or is being finalized (framework, data model, service boundary, protocol, build-vs-buy) so the reasoning survives, or when the user says /adr. Also use before re-deciding something — to check existing ADRs first. This captures a decision; it does not deliberate one (weighing the options is less-is-more).
 ---
 
 # ADR — Architecture Decision Records
@@ -15,6 +15,7 @@ A significant decision that isn't written down gets re-litigated, half-remembere
 - A decision people will ask "why?" about later.
 - Before re-deciding something — search existing ADRs first; the question may already be answered (and rejected for a reason).
 - Not for: reversible, local, or obvious choices.
+- Not for *deliberating* a decision still in flight — that is `bardak:less-is-more`. Reach for an ADR once the choice is settled and worth recording.
 
 ## Search First
 
