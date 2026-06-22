@@ -28,11 +28,11 @@ Under-abstraction and over-abstraction are equally defects. This skill targets o
 ## The Earn Test — all four, or stay lazy
 
 1. **It is structure, not machinery.** A boundary, schema, seam, or type — not a cache, lock, retry, or guard. Machinery waits for a measured failure.
-2. **The future need is named.** A stated next variant, a known second consumer, persistence that must evolve. "Might someday" is not named — that is speculation, and `bardak:ponytail` wins.
+2. **The future need is named.** A stated next variant, a known second consumer, persistence that must evolve. "Might someday" is not named — that is speculation; stay minimal (YAGNI).
 3. **The cheap version fails the N+1 test.** Ask: *what happens at variant N+1?* If adding the second case means editing the generic/shared layer, the seam is in the wrong place — build the port now.
 4. **The cheap version forces future ceremony.** If shipping it small now means a later backfill, migration, new index, or reparenting, the cheap design is the expensive one.
 
-If any fails, you are over-engineering — stop, and let `bardak:less-is-more` / `bardak:ponytail` govern.
+If any fails, you are over-engineering — stop, and let `bardak:less-is-more` and the minimal default govern.
 
 ## The Mentality — recognize the shape, apply the solidified form
 
@@ -55,7 +55,7 @@ The generic core stays generic: shared/core models, services, and hot paths carr
 
 | Thought | Reality |
 |---|---|
-| "Make it generic in case we need it" | No named need = speculation. Build it when the need is named; `ponytail` wins now. |
+| "Make it generic in case we need it" | No named need = speculation. Build it when the need is named; stay minimal until then. |
 | "Add a lock/retry/guard to be safe" | Runtime machinery. Defer until a failure is measured. |
 | "This abstraction is elegant" | Elegance isn't a justification. Name the future cost it buys down, or drop it. |
 | "Fold these three refactors into this PR" | Investment isn't scope creep. Split orthogonal refactors out. |
