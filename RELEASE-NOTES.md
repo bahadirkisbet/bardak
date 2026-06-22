@@ -21,8 +21,7 @@ skills) found the only systematic defect was over-firing:
 - **verify-the-premise** spells out its distinction from `pipeline-verification`.
 
 Recall held at 33/33 across the eval; description collisions dropped from 9 to 3. The new
-`more-is-less` skill was validated the same way (5/6 recall, zero false fires after
-tuning). Adds a reusable routing-eval harness under `plugins/bardak/.skill-evals/`.
+`more-is-less` skill was validated the same way (5/6 recall, zero false fires after tuning).
 
 ## v0.1.1 (2026-06-22)
 
