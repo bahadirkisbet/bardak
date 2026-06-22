@@ -10,7 +10,7 @@ the moment calls for it.
 
 | Skill | What it does |
 |---|---|
-| **blind-review** | Final quality gate. Dispatches independent reviewers that see ONLY the spec — no implementation summaries, no file lists — so they find the gap between what was asked and what was built. |
+| **blind-review** | Final quality gate. Dispatches independent reviewers who never see the implementer's account of the work — only the code and, at most, one intent artifact: nothing (cold audit), the spec (compliance), or the plan (drift). They find the gap between intent and what was built. |
 | **retrospective** | At the end of a session, extracts the non-obvious lessons and persists them (project instructions / rules / skills / memory) so the same friction doesn't repeat. |
 | **less-is-more** | For architecture decisions: extract the intent, lay out explicit paths *before* tradeoffs, weigh them against accumulated **business context** — and learn the business a little more on every use. |
 | **more-is-less** | The disciplined counterweight to `less-is-more`: when a structural boundary — a schema, an integration/variant seam, a contract — has a *named* future need, invest in the seam now (a port, an extension point, a value type) so the next variant is additive, not a migration. Guards both failure modes: speculation is over-engineering; a hardcoded `if type == …` branch is under-engineering. |
@@ -18,7 +18,7 @@ the moment calls for it.
 | **verify-the-premise** | A behavior: never assume. Decide, suggest, and act on data — read the code, run it, trace the real path — not on what's expected to be true. |
 | **pipeline-verification** | A change isn't verified by unit tests alone. Map the blast radius, verify end to end through the real user-visible pipeline, and report honestly what was and wasn't checked. |
 | **bugfix-tdd** | No bug fix without a failing test that reproduces it first. Red, then fix, then green, then confirm no regressions. |
-| **adr** | Capture a significant, hard-to-reverse decision as a short, immutable Architecture Decision Record — context, options, consequences. Search existing ADRs before re-deciding. |
+| **adr** | Capture a significant, hard-to-reverse decision as a short, immutable Architecture Decision Record — context, options, consequences — stored one-per-file in `docs/adr/`. Search existing ADRs before re-deciding. |
 
 ## Install
 
