@@ -1,6 +1,6 @@
 {
   "name": "bardak",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Skills for people who spend serious time in Claude Code — disciplined review, verification, and architecture reflexes: blind review, retrospective, less-is-more architecture, no silent errors, verify the premise, end-to-end pipeline verification, bugfix TDD, and architecture decision records (ADR).",
   "author": {
     "name": "Bahadir Kisbet",

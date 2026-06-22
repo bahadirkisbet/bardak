@@ -1,5 +1,20 @@
 # Release Notes
 
+## v0.1.2 (2026-06-22)
+
+Skill-triggering improvements (wording only — no behavior change). A routing eval
+(scoring each skill's description against the others and the real competing
+installed skills) found the only systematic defect was over-firing:
+
+- **adr** no longer fires while a decision is still being *deliberated* (that is
+  `less-is-more`); it now anchors on *recording* a finalized decision.
+- **no-silent-errors** drops its over-broad scope and no longer triggers on plain
+  parsing/formatting (e.g. writing a regex).
+- **verify-the-premise** spells out its distinction from `pipeline-verification`.
+
+Recall held at 33/33 across the eval; description collisions dropped from 9 to 3.
+Adds a reusable routing-eval harness under `plugins/bardak/.skill-evals/`.
+
 ## v0.1.1 (2026-06-22)
 
 Maintenance — version bump only, no skill changes. First run of the `dev` → `main`
