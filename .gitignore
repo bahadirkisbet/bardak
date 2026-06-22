@@ -1,1 +1,5 @@
 .DS_Store
+
+# Skill-triggering eval scratch (route.py + queries.json are kept; runs are not)
+plugins/bardak/.skill-evals/results/
+plugins/bardak/.skill-evals/eval-sets/
