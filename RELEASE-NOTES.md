@@ -67,7 +67,7 @@ Initial release. Eight skills, packaged as a Claude Code marketplace plugin.
 - `bugfix-tdd` — a failing reproduction test before any fix.
 - `adr` — short, immutable Architecture Decision Records.
 
-**Conventions** (informed by a study of obra/Superpowers)
+**Conventions**
 - Descriptions are trigger-only (when to use), so the skill body is read, not skipped.
 - The four reflex skills carry an Iron Law and a Red Flags rationalization table.
 - Skills cross-reference each other (`bardak:` namespace) into workflows.
