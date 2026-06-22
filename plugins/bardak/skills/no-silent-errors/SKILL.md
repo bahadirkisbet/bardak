@@ -1,6 +1,6 @@
 ---
 name: no-silent-errors
-description: Use constantly — whenever writing, reviewing, or changing any code that can fail, return, raise, or branch on an error, or when defining a type or a data boundary. Triggers on almost any implementation or review.
+description: Use whenever a failure or error path is in play — error handling, exceptions, swallowed failures, fallbacks, or empty/None/default values standing in for missing required data — and when modeling a type so a failure cannot be represented silently. The concern is failures that pass unnoticed; reach for it any time a value, call, or branch could fail without anyone seeing. Not triggered merely because code is involved, or because input is being parsed or formatted — triggered when how something fails, or is kept from failing, is at stake.
 ---
 
 # No Silent Errors

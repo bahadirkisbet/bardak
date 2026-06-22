@@ -1,1 +1,4 @@
 .DS_Store
+
+# Skill-triggering eval scratch — dev tooling, not part of the published plugin
+plugins/bardak/.skill-evals/
