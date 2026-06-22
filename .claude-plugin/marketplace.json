@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "bardak — quality and discipline skills for people who live in Claude Code.",
-    "version": "0.1.2"
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "bardak",
       "source": "./plugins/bardak",
-      "description": "Blind review, retrospective, less-is-more architecture, no silent errors, verify the premise, pipeline verification, bugfix TDD, ADR.",
-      "version": "0.1.2",
+      "description": "Blind review, retrospective, less-is-more architecture, more-is-less structural investment, no silent errors, verify the premise, pipeline verification, bugfix TDD, ADR.",
+      "version": "0.2.0",
       "author": {
         "name": "Bahadir Kisbet",
         "url": "https://github.com/bahadirkisbet"

@@ -1,10 +1,18 @@
 # Release Notes
 
-## v0.1.2 (2026-06-22)
+## v0.2.0 (2026-06-22)
 
-Skill-triggering improvements (wording only — no behavior change). A routing eval
-(scoring each skill's description against the others and the real competing
-installed skills) found the only systematic defect was over-firing:
+**New skill: `more-is-less`** — the disciplined counterweight to `less-is-more`. When a
+structural boundary (a schema, an integration/variant seam, a contract) has a *named*
+future need, it makes the case for investing in the seam now — a port, an extension
+point, a value type — so the next variant is additive instead of a migration. It guards
+both failure modes: speculative flexibility is over-engineering, but a hardcoded
+`if type == …` branch is under-engineering. It refines, never overrides, `less-is-more`
+(that one governs runtime complexity; this one governs structure at a boundary).
+
+**Skill-triggering improvements** (wording only — no behavior change). A routing eval
+(scoring each skill's description against the others and the real competing installed
+skills) found the only systematic defect was over-firing:
 
 - **adr** no longer fires while a decision is still being *deliberated* (that is
   `less-is-more`); it now anchors on *recording* a finalized decision.
@@ -12,8 +20,9 @@ installed skills) found the only systematic defect was over-firing:
   parsing/formatting (e.g. writing a regex).
 - **verify-the-premise** spells out its distinction from `pipeline-verification`.
 
-Recall held at 33/33 across the eval; description collisions dropped from 9 to 3.
-Adds a reusable routing-eval harness under `plugins/bardak/.skill-evals/`.
+Recall held at 33/33 across the eval; description collisions dropped from 9 to 3. The new
+`more-is-less` skill was validated the same way (5/6 recall, zero false fires after
+tuning). Adds a reusable routing-eval harness under `plugins/bardak/.skill-evals/`.
 
 ## v0.1.1 (2026-06-22)
 
