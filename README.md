@@ -36,9 +36,6 @@ Or, from inside Claude Code:
 /plugin install bardak@bardak
 ```
 
-> `bahadirkisbet/bardak` is the GitHub shorthand (defaults to GitHub); `github:bahadirkisbet/bardak`
-> is the same thing with the host spelled out. Both register the identical marketplace.
-
 Skills activate on their own when the situation matches their description, or you can
 invoke one directly (e.g. `/blind-review`, `/retrospective`, `/adr`).
 
