@@ -20,9 +20,12 @@ the moment calls for it.
 | **bugfix-tdd** | No bug fix without a failing test that reproduces it first. Red, then fix, then green, then confirm no regressions. |
 | **adr** | Capture a significant, hard-to-reverse decision as a short, immutable Architecture Decision Record — context, options, consequences. Search existing ADRs before re-deciding. |
 
-## Install (Claude Code)
+## Install
 
-Add the marketplace, then install the plugin:
+bardak is one marketplace, and the two big agentic CLIs read the same manifest — so the
+install is the same two steps on each: add the marketplace, then install the plugin.
+
+### Claude Code
 
 ```bash
 claude plugin marketplace add bahadirkisbet/bardak
@@ -36,13 +39,24 @@ Or, from inside Claude Code:
 /plugin install bardak@bardak
 ```
 
-Skills activate on their own when the situation matches their description, or you can
-invoke one directly (e.g. `/blind-review`, `/retrospective`, `/adr`).
+### Codex
 
-## Use with Codex
+Codex (CLI ≥ 0.139) reads the same marketplace:
 
-The skills are plain `SKILL.md` files and work under Codex too — see
-[docs/codex.md](docs/codex.md) for the per-project install and `AGENTS.md` wiring.
+```bash
+codex plugin marketplace add bahadirkisbet/bardak
+codex plugin add bardak@bardak
+```
+
+Or, from inside Codex: open `/plugins`, pick the **bardak** marketplace, install **bardak**,
+then start a new thread. (This same install also covers the Codex desktop app — restart it
+after installing and it picks up the plugin.)
+
+Either way, skills activate on their own when the situation matches their description, or
+you can invoke one directly (e.g. `/blind-review`, `/retrospective`, `/adr`).
+
+For per-project pinning or wiring the skills into an `AGENTS.md` by hand, see
+[docs/codex.md](docs/codex.md).
 
 ## A note on `less-is-more` and memory
 
