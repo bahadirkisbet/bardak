@@ -32,10 +32,10 @@
         "source": "git-subdir",
         "url": "https://github.com/bahadirkisbet/asm.git",
         "path": "plugins/asm",
-        "sha": "6ec24d10930b1f8a229e0b3558bcfa68a0dfe956"
+        "sha": "4492738d4cd5e28fe1d2fdc79229c983b4915f68"
       },
       "description": "Agentic Secret Manager: capture and deliver credentials without plaintext tool responses. Public source and bundled native binaries.",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": {
         "name": "Bahadir Kisbet",
         "url": "https://github.com/bahadirkisbet"
