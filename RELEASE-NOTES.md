@@ -1,5 +1,11 @@
 # Release Notes
 
+## v0.4.1 (2026-11-09)
+
+ASM is now public. Its marketplace entry uses HTTPS so installation no longer
+requires private repository access or an SSH key. README links the public source
+and explains installation. ASM remains at 0.1.2; its native binaries are unchanged.
+
 ## v0.4.0 (2026-11-09)
 
 Bardak now applies the same evidence and scope discipline across Claude Code and Codex.
