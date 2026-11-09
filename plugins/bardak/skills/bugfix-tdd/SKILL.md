@@ -1,58 +1,24 @@
 ---
 name: bugfix-tdd
-description: Use when fixing any bug, regression, or "it does the wrong thing" report. Not for net-new features (ordinary TDD) or pure behavior-preserving refactors.
+description: Reproduce a behavioral bug with a failing regression test before fixing it, then prove the fix and relevant surrounding behavior. Not for new features, documentation edits or behavior-preserving refactors.
 ---
 
 # Bugfix TDD
 
-A bug fix without a failing test that reproduces it is a guess. Reproduce first — a red test that captures the bug — then fix until it is green. The test is the proof the bug existed and the guard that it stays fixed.
+For a behavioral bug, observe the failure before editing the implementation. A test failure is evidence only when it reaches the reported defect.
 
-**Announce at start:** "Reproducing the bug with a failing test before fixing."
+1. Confirm expected behavior and trace the actual entry point, callers and existing tests. Distinguish the reported symptom from an assumed cause.
+2. Write the smallest regression test asserting the correct observable behavior. Run it against the buggy implementation and preserve the test process exit status; run the test directly, or enable pipefail if filtering its output. A trailing filter must not turn a failure into command success.
+3. Inspect the failure. Missing imports, unavailable services, compilation errors and unrelated assertions do not prove the bug. Correct the harness or label the blocker before claiming red. Do not edit the implementation until this failure has been observed; an unavailable test runner permits investigation and a proposed test, not an unverified implementation fix.
+4. Make the smallest in-scope fix at the responsible layer. Preserve validation and error handling; update affected callers and fixtures.
+5. Observe the same regression test pass. Run relevant surrounding tests and repository-required checks. Verify the affected boundary when runtime behavior changed.
 
-## Iron Law
+## When evidence is difficult
 
-**NO BUG FIX WITHOUT A TEST THAT REPRODUCES THE BUG AND FAILS FIRST.**
+An unavailable environment or nondeterministic failure does not prove the diagnosis wrong. Gather a bounded reproduction, traces or a deterministic test of the responsible contract. State what remains unknown. Do not invent a red result, loosen an acceptance gate or repeatedly run a failing setup without new evidence.
 
-## When to Use
+If the fix already exists, run the new test against the pre-fix implementation in an isolated scratch copy/worktree, then against the fix. Preserve another writer's checkout. Report this as retrospective regression proof, not test-first development. A structural assertion that could stay green while behavior breaks needs a meaningful mutation or behavior check. Verify that the intended mutation actually changed the target, observe the expected failure, then restore and observe the baseline pass.
 
-- Any bug, regression, or "it does the wrong thing" report.
-- Not for: net-new features (that's ordinary TDD), pure refactors with behavior unchanged.
+For a defect that cannot be automated, retain reproducible before/after steps and observations. Follow repository policy on required tests or exceptions; a skill does not waive those gates. A text/configuration correction needs relevant validation, not an artificial application regression test.
 
-## Step 1: Reproduce with a Failing Test
-
-Write the smallest test that exercises the buggy path and asserts the *correct* behavior. Run it. It MUST fail.
-
-If you can't write a test that fails, you don't yet understand the bug. Keep investigating; don't fix blind.
-
-## Step 2: Confirm the Failure Is the Bug
-
-Read the failure. Is it failing because of the actual bug, or because the test is wrong? A test that fails for the wrong reason proves nothing — fix the test until it fails for the bug's reason.
-
-## Step 3: Fix
-
-Make the minimal change that turns the test green. Don't expand scope; don't fix unrelated things in the same step.
-
-## Step 4: Confirm Green + No Regressions
-
-- The new test passes.
-- The surrounding suite still passes — the fix didn't break a neighbor.
-- Re-read the diff: did you fix the cause, or paper over the symptom just enough to make the test pass?
-
-## Red Flags — STOP
-
-| Thought | Reality |
-|---|---|
-| "I see the bug — I'll just fix it" | Then you have no proof it was the bug, or that it stays fixed. Red test first. |
-| "I'll add the test after the fix" | After means never, and a test written green never proves it catches the bug. |
-| "It's too hard to write a test for this" | Then you don't understand the bug yet. Keep digging. |
-| "The fix is obvious" | Obvious fixes paper over symptoms. The failing test keeps you honest. |
-
-## Common Mistakes
-
-- Fixing first, adding a test after (or never) — you lose the proof the test catches the bug.
-- A test that passes even before the fix — it doesn't exercise the bug.
-- A test that fails for the wrong reason — verify the failure mode first.
-- Expanding the fix beyond what the test demands.
-- Skipping the full-suite run — confirm the fix didn't regress a neighbor.
-
-**Required next:** `bardak:no-silent-errors` (don't let the fix add a silent failure) and `bardak:pipeline-verification` (verify the fix end to end, not just the new unit test).
+Report the buggy snapshot, failing command and failure reason, fixed snapshot and observed pass. Keep unavailable CI or live checks separate. Apply `no-silent-errors` only if failure handling changes and `pipeline-verification` at the boundary the fix reaches.

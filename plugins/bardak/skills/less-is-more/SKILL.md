@@ -1,73 +1,32 @@
 ---
 name: less-is-more
-description: Use before committing to any architecture, design, or non-trivial technical direction — when the user asks how to build or structure something, proposes a system or feature, or faces a hard-to-reverse structural decision. Not for localized code style or a single function's implementation.
+description: Compare realistic options for a significant architecture or design decision using the user's goal, existing system and business constraints. Not for routine local implementation choices or mechanical edits.
 ---
 
 # Less Is More
 
-Architecture decisions are won or lost on understanding the *intent* and the *business* — not on cleverness. You are usually NOT fully aware of the business. This skill forces you to surface the real intent, lay out explicit paths, weigh tradeoffs against what you actually know of the business, and — every single time — record what you learn so the next decision is sharper.
+Choose the smallest design that fully serves the requested outcome and known constraints. Reduction must preserve required validation, accessibility, security and data integrity.
 
-This skill operates at the architecture / design altitude. Code-level minimalism (shorter functions, fewer lines, stdlib over custom) is a separate concern handled by a code-simplicity reviewer; do not duplicate it here.
+## Understand the decision
 
-**Announce at start:** "Using less-is-more to map paths and tradeoffs against business context."
+State the intended outcome without replacing the user's chosen product or scope. Read the relevant existing implementation, accepted ADRs (including superseding records) and project context before proposing new machinery. Name any decision the proposed design would replace; resolve that conflict rather than silently ignoring it.
 
-## When to Use
+Use the project's designated knowledge source. Do not create a provider-specific business-context file when shared context already exists. Treat old notes as leads; revalidate facts that determine this decision.
 
-- "How should we build / structure X?", a new service / module / feature, a schema or data-flow decision, build-vs-buy, a structural refactor.
-- Any decision where picking wrong is expensive to reverse.
-- Not for: localized code style, a single function's implementation, mechanical edits.
+Ask only for a missing fact that materially changes the choice. Continue independent work while waiting. For reversible details within authorized scope, use a stated reasonable assumption rather than requiring another approval.
 
-## Step 1: Extract the Intent
+## Compare viable paths
 
-State the real goal in one or two sentences — the outcome the user wants, not the literal mechanism they named. Users often ask for a solution; find the problem underneath it.
+Present the genuine alternatives and their assumptions before the recommendation. Include reuse or doing nothing when either meets the need. Do not invent a fixed quota of alternatives when only one is viable.
 
-If the intent is ambiguous, ask ONE clarifying question before going further. A wrong intent makes every path below wrong.
+Compare build effort, operational cost, reversibility and fit to known business constraints. Separate observed facts from estimates. Name the fact that would change the recommendation.
 
-## Step 2: Load Business Context
+Prefer the existing component, platform feature or installed dependency when it fully works. A named future consumer can justify a small boundary now; speculative caching, registries and configuration cannot justify themselves. Use `more-is-less` only when that boundary decision is actually present.
 
-Read the project's business-context note (default: `.claude/business-context.md`; create it if missing). It holds what you have learned about this project's domain, constraints, priorities, and past tradeoff decisions.
+## Preserve decisions without manufacturing memory
 
-You are not the domain expert. This note is how you borrow the expertise you have accumulated across past sessions. Use it to ground everything below. Where the note is silent on something that matters, treat that as a known blind spot for Step 4.
+Before implementing a significant settled choice, identify its covering ADR or record it through `adr` when documentation is within scope. Include the rejected alternatives, consequences and observable acceptance criteria. Advice is not an accepted decision.
 
-## Step 3: Lay Out Explicit Paths — BEFORE Tradeoffs
+Persist new business knowledge only when supported by evidence and authorized by the user's request or established project policy. Use the canonical destination, keep company and personal scopes separate, and reread before a narrow edit. A pending inference is not a confirmed fact. No new durable knowledge means no write.
 
-Present 2–4 concrete, named paths. For each: what it is, what building it actually entails, what it assumes. Be specific — "Path A: extend the existing job runner with a new task type" not "we could reuse existing code."
-
-Do NOT jump to a recommendation yet. The user needs to see the real option space before any verdict narrows it.
-
-## Step 4: Tradeoffs, Grounded in the Business
-
-Only now weigh the paths — against the business context, not abstract purity:
-
-- Cost to build, cost to reverse, cost to operate.
-- Fit to the known constraints and priorities from Step 2.
-- The simplicity lens: fewer moving parts wins when nothing in the business argues otherwise.
-
-**Flag your blind spots.** Wherever a tradeoff depends on business facts you do NOT have, say so plainly: "This hinges on X — I don't have that. If X, Path A; if not-X, Path B." Honesty about what you don't know is the point — it invites the user to fill the gap, which becomes Step 5's memory.
-
-Then give a recommendation, conditioned on the open questions.
-
-## Step 5: Learn the Business — EVERY Time
-
-This is mandatory, not optional. The skill is worthless without it.
-
-After the decision (or the user's correction of it), append to `.claude/business-context.md` what you learned:
-
-```
-## <YYYY-MM-DD> — <topic>
-- Domain fact / constraint / priority learned:
-- Decision made, and the *business* reason (not just the technical one):
-- Tradeoff the user weighted differently than you expected:
-```
-
-Over many uses this note turns "I don't know the business" into "I know this business." Each invocation must leave the note richer than it found it.
-
-## Common Mistakes
-
-- Recommending before showing the explicit paths — the user can't see what you ruled out.
-- Weighing tradeoffs on engineering aesthetics instead of business reality.
-- Pretending to know the business — hiding blind spots instead of flagging them.
-- Skipping Step 5 — a session that taught you nothing persistent wasted the skill.
-- Reading "less" as "fewest lines." Here "less" means fewer moving parts and less you will regret, decided against the business.
-
-**Required next:** when the chosen path is significant and hard to reverse, record it with `bardak:adr` — its Context and Options sections draw on the paths and business context from this skill.
+Do not turn each consultation into a new file, rule or approval cycle. Show tradeoffs and the recommendation; name any unresolved material assumption.
