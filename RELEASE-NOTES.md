@@ -1,5 +1,35 @@
 # Release Notes
 
+## v0.4.0 (2026-11-09)
+
+Bardak now applies the same evidence and scope discipline across Claude Code and Codex.
+
+- ADRs are read before structural implementation and review; accepted decisions are
+  checked for conformance, and replacements preserve explicit approval and decision history.
+- Independent review uses a fresh context, exact target and verified findings. Missing
+  implementations produce an incomplete review, not an invented product defect.
+- Regression workflows distinguish real behavioral failures from setup problems and
+  stop implementation when the required test runner is unavailable.
+- Verification scales to the affected boundary and separates local tests, mocks, live
+  integration, CI, deployment and user acceptance. Temporary resources have explicit owners.
+- Architecture advice no longer forces a memory write. Skills use the project's canonical
+  knowledge source and preserve preview-only and existing authorization boundaries.
+- Error handling preserves legitimate absence and controlled degradation. Correctness
+  controls are distinguished from speculative performance machinery.
+- Codex/Claude installation and invocation guidance now distinguishes source changes,
+  copied skills, discovery and actual behavior. The existing ASM 0.1.2 catalog entry is preserved.
+- The version helper now updates/checks only Bardak's three version fields, without
+  rewriting independently versioned plugins or their source pins.
+
+Validation: 39 isolated CLI sessions, independent before/after proof for four generated
+regression suites, nine skill metadata checks, and independent full-file review.
+The version helper has four focused tests; the two multi-plugin regressions failed
+before the fix and pass afterward. See [behavior evidence and limitations](docs/verification/2026-11-09-skill-behavior.md).
+
+Known limitation: some generated shell command chains still mask or conflate exit codes.
+Raw test outputs and independent reruns support the reported outcomes; these observations
+are not a guarantee of reliable automation gates or normal installed-host behavior.
+
 ## v0.3.0 (2026-06-22)
 
 **`blind-review` gains review modes.** It was spec-only; it now runs in one of three

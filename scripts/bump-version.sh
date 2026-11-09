@@ -1,31 +1,38 @@
 #!/usr/bin/env bash
-# Bump (or check) the bardak version, kept in lockstep across both manifests.
-#   bump-version.sh X.Y.Z   -> set version in plugin.json + marketplace.json
-#   bump-version.sh --check -> verify all version strings match (exit 1 on drift)
+# Bump/check Bardak's plugin, catalog entry and marketplace metadata together.
+# Other plugins in the marketplace keep their own independent versions and pins.
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PLUGIN="$ROOT/plugins/bardak/.claude-plugin/plugin.json"
-MARKET="$ROOT/.claude-plugin/marketplace.json"
-SEMVER='[0-9]+\.[0-9]+\.[0-9]+'
+exec python3 - "$(cd "$(dirname "$0")/.." && pwd)" "$@" <<'PYTHON'
+import json
+from pathlib import Path
+import re
+import sys
 
-versions() {
-  grep -hoE "\"version\": \"$SEMVER\"" "$PLUGIN" "$MARKET" | grep -oE "$SEMVER" | sort -u
-}
+if len(sys.argv) != 3 or (sys.argv[2] != "--check" and not re.fullmatch(r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)", sys.argv[2])):
+    sys.exit("usage: bump-version.sh X.Y.Z | --check")
 
-if [[ "${1:-}" == "--check" ]]; then
-  n=$(versions | wc -l | tr -d ' ')
-  if [[ "$n" != "1" ]]; then
-    echo "version drift across manifests:"; versions; exit 1
-  fi
-  echo "version OK: $(versions)"; exit 0
-fi
-
-NEW="${1:-}"
-if [[ ! "$NEW" =~ ^$SEMVER$ ]]; then
-  echo "usage: bump-version.sh X.Y.Z | --check" >&2; exit 1
-fi
-OLD=$(versions | head -1)
-perl -0pi -e "s/\"version\":\s*\"$SEMVER\"/\"version\": \"$NEW\"/g" "$PLUGIN" "$MARKET"
-echo "bumped ${OLD:-?} -> $NEW in plugin.json + marketplace.json"
-echo "next: add a RELEASE-NOTES.md entry, merge dev -> main, tag v$NEW (see RELEASE.md)"
+root, action = Path(sys.argv[1]), sys.argv[2]
+plugin_path = root / "plugins/bardak/.claude-plugin/plugin.json"
+market_path = root / ".claude-plugin/marketplace.json"
+try:
+    plugin = json.loads(plugin_path.read_text())
+    market = json.loads(market_path.read_text())
+    entries = [entry for entry in market["plugins"] if entry["name"] == "bardak"]
+    if plugin["name"] != "bardak" or len(entries) != 1:
+        raise ValueError("expected exactly one Bardak plugin and catalog entry")
+    entry = entries[0]
+    versions = {plugin["version"], market["metadata"]["version"], entry["version"]}
+    if action == "--check":
+        if len(versions) != 1:
+            sys.exit("Bardak version drift: " + ", ".join(sorted(versions)))
+        print("version OK: " + plugin["version"])
+    else:
+        plugin["version"] = market["metadata"]["version"] = entry["version"] = action
+        plugin_path.write_text(json.dumps(plugin, indent=2) + "\n")
+        market_path.write_text(json.dumps(market, indent=2) + "\n")
+        print("bumped Bardak to " + action + "; other plugin versions unchanged")
+        print("next: release notes, dev -> main merge, and tag v" + action + " (see RELEASE.md)")
+except (OSError, ValueError, KeyError, TypeError) as error:
+    sys.exit("version update failed: " + str(error))
+PYTHON

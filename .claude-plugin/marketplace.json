@@ -5,15 +5,15 @@
     "url": "https://github.com/bahadirkisbet"
   },
   "metadata": {
-    "description": "bardak — skills and tools for Claude Code and Codex.",
-    "version": "0.3.0"
+    "description": "bardak \u2014 skills and tools for Claude Code and Codex.",
+    "version": "0.4.0"
   },
   "plugins": [
     {
       "name": "bardak",
       "source": "./plugins/bardak",
       "description": "Blind review, retrospective, less-is-more architecture, more-is-less structural investment, no silent errors, verify the premise, pipeline verification, bugfix TDD, ADR.",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": {
         "name": "Bahadir Kisbet",
         "url": "https://github.com/bahadirkisbet"

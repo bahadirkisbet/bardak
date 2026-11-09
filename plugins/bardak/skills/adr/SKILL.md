@@ -1,62 +1,36 @@
 ---
 name: adr
-description: Use to record or document a significant, hard-to-reverse technical decision that has been made or is being finalized (framework, data model, service boundary, protocol, build-vs-buy) so the reasoning survives, or when the user says /adr. Also use before re-deciding something — to check existing ADRs first. This captures a decision; it does not deliberate one (weighing the options is less-is-more).
+description: Read and enforce relevant architecture decisions before structural implementation or review; record significant new decisions and explicit supersession. Use for data models, service boundaries, public contracts or dependency choices, not routine local edits.
 ---
 
-# ADR — Architecture Decision Records
+# Architecture Decision Records
 
-A significant decision that isn't written down gets re-litigated, half-remembered, or silently reversed. An ADR is a short, immutable record of one decision: what was decided, why, what was rejected, and what it costs. Cheap to write; priceless six months later when someone asks "why is it like this?"
+Preserve what was decided, by whom or under what authority, why, and at what cost. A recommendation is not an accepted decision.
 
-**Announce at start:** "Recording this as an ADR." / "Searching existing ADRs first."
+## Read decisions before structural work
 
-## When to Use
+Use the project's existing ADR location, numbering and template; default to `docs/adr/` only when none exists. Search by the affected component, contract and decision topic, then read relevant accepted ADRs and their superseding records before designing, implementing or reviewing structural changes. Follow linked decisions only as needed; do not load every ADR. Check current constraints rather than treating a historical decision as permanently applicable.
 
-- A decision that is expensive to reverse: a framework, a data model, a service boundary, a protocol, a build-vs-buy.
-- A decision people will ask "why?" about later.
-- Before re-deciding something — search existing ADRs first; the question may already be answered (and rejected for a reason).
-- Not for: reversible, local, or obvious choices.
-- Not for *deliberating* a decision still in flight — that is `bardak:less-is-more`. Reach for an ADR once the choice is settled and worth recording.
+State which decisions constrain the change and whether it conforms. If code differs from an accepted ADR, report the drift and establish whether the code or decision needs correction; neither silently wins. If the requested change conflicts with an accepted decision, surface the conflict before dependent implementation. Existing explicit authorization to replace that decision is sufficient; otherwise prepare the replacement proposal and continue independent work. Do not silently reverse a decision or ask again when the user has already settled it.
 
-## Search First
+Create a record only within the authorized documentation scope. For a preview-only request, present a draft without changing the repository. Do not create a separate provider-specific decision store.
 
-Before writing a new ADR, look through the existing ones (default location: `docs/adr/`). If the decision was already made, read it — don't silently contradict or duplicate it. If you are reversing a past ADR, the new one supersedes it explicitly (reference its number).
+## Keep one decision per record
 
-## Write the ADR
+Use a short record with:
+- Status: proposed, accepted, or superseded by a linked decision.
+- Date and decision source/authority. Set accepted only when the decision is actually made within that authority.
+- Context: the problem, constraints and material assumptions. Separate observed code/schema facts from assumptions and cite the evidence for consequential technical claims; do not fill missing facts from framework conventions.
+- Decision: the chosen course, or the proposal awaiting a decision.
+- Options considered: viable alternatives and reasons for choosing/rejecting them.
+- Consequences: benefits, costs, compatibility/rollout implications and unresolved risks.
+- Verification: observable criteria that would demonstrate the implementation follows the decision, plus links to implementation/tests when available. Mark future checks as planned, not passed.
+- Revisit conditions when material: which changed constraint or new evidence would justify reconsideration, not an invented expiry date.
 
-One file per decision: `docs/adr/NNNN-short-title.md` (zero-padded sequential number). Keep it short — a screen, not an essay.
+Use existing naming conventions. For sequential numbers, reread the directory immediately before creating a file and avoid overwriting a concurrently added record; renumber the new draft if necessary.
 
-```
-# NNNN. <short decision title>
+Before finishing an authorized significant structural change, check whether its settled decision is recorded. Reuse a covering ADR; create or update a draft when documentation is within scope, and flag an outstanding decision record otherwise. Do not create an ADR for ordinary local edits.
 
-- Status: proposed | accepted | superseded by ADR-XXXX
-- Date: YYYY-MM-DD
+An accepted ADR's decision is not silently rewritten. To change course, create a new ADR that explicitly references its predecessor. A proposed replacement does not supersede the accepted decision yet. Once the replacement is accepted under the proper authority, narrowly update the old status/link. Verify both references. Keep proposed records open to revision and preserve unrelated edits.
 
-## Context
-What forces are at play — the problem, constraints, and assumptions that make this a real decision. Pull from project business context where relevant.
-
-## Decision
-What we are doing. State it as a fact: "We will …"
-
-## Options Considered
-- Option A — what it is, why chosen/rejected.
-- Option B — …
-
-## Consequences
-What becomes easier, what becomes harder, what we now have to live with. The costs, not just the wins.
-```
-
-## Rules
-
-- **Immutable.** An accepted ADR is not edited to change the decision. To change course, write a NEW ADR that supersedes it and flip the old one's status to "superseded by ADR-XXXX."
-- **Numbered sequentially**, never reused.
-- **Honest consequences** — record the costs and the things that got harder, not only the upside. A consequences section with only wins is a sales pitch, not a record.
-
-## Common Mistakes
-
-- Editing an old ADR to reverse it instead of superseding it — destroys the history of *why*.
-- Writing ADRs for trivial or reversible choices — noise that buries the real ones.
-- Skipping the search and re-deciding something already settled.
-- A consequences section that lists only benefits.
-- Novel-length ADRs nobody will read — keep it to one screen.
-
-**Pairs with:** `bardak:less-is-more` — its path analysis and `.claude/business-context.md` feed this ADR's Context and Options sections.
+Report whether the artifact is proposed, saved or accepted. Do not infer acceptance from file existence, a previous agent's summary or this skill's invocation.

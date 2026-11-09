@@ -13,8 +13,8 @@ Keep `main` as the GitHub default branch so the marketplace tracks stable.
 
 ## Cut a release
 
-1. On `dev`, finish and verify changes (`scripts/bump-version.sh --check`; JSON valid; skills load).
-2. Bump the version (kept in lockstep across both manifests):
+1. On `dev`, finish and verify changes (`scripts/bump-version.sh --check`; `python3 -m unittest discover -s tests -v`; JSON valid; skills load).
+2. Bump the version (Bardak fields only; other plugin versions and source pins remain unchanged):
    ```bash
    scripts/bump-version.sh 0.2.0
    scripts/bump-version.sh --check
