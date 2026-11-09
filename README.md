@@ -58,6 +58,29 @@ you can invoke one directly (e.g. `/blind-review`, `/retrospective`, `/adr`).
 For per-project pinning or wiring the skills into an `AGENTS.md` by hand, see
 [docs/codex.md](docs/codex.md).
 
+## ASM: Agentic Secret Manager
+
+The same marketplace also lists **`asm@bardak`**, a Claude Code/Codex plugin for
+capturing and delivering credentials without returning their values to chat.
+The catalog entry is public; the implementation and native binaries remain in
+the private `bahadirkisbet/asm` repository. Installation requires an SSH identity
+with access to that repository. Adding bardak alone does not grant that access.
+
+After adding this marketplace, install ASM with:
+
+```bash
+claude plugin marketplace update bardak
+claude plugin install asm@bardak
+
+codex plugin marketplace upgrade bardak
+codex plugin add asm@bardak
+```
+
+The entry pins a specific ASM commit and installs its `plugins/asm` package.
+ASM requires Python 3.9+ and supports macOS Apple Silicon/Intel and Linux x86_64.
+Restart existing sessions after installation. Existing bardak skills are a
+separate plugin and remain available without ASM repository access.
+
 ## A note on `less-is-more` and memory
 
 `less-is-more` reads and appends to a project-local note at `.claude/business-context.md`.

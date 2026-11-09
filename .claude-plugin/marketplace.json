@@ -5,7 +5,7 @@
     "url": "https://github.com/bahadirkisbet"
   },
   "metadata": {
-    "description": "bardak — quality and discipline skills for people who live in Claude Code.",
+    "description": "bardak — skills and tools for Claude Code and Codex.",
     "version": "0.3.0"
   },
   "plugins": [
@@ -24,6 +24,27 @@
         "quality",
         "architecture",
         "verification"
+      ]
+    },
+    {
+      "name": "asm",
+      "source": {
+        "source": "git-subdir",
+        "url": "git@github.com:bahadirkisbet/asm.git",
+        "path": "plugins/asm",
+        "sha": "2242698d928be85bcdb4a7d927cdb8852a2efba8"
+      },
+      "description": "Agentic Secret Manager: capture and deliver credentials without plaintext tool responses. Private repository access required.",
+      "version": "0.1.1",
+      "author": {
+        "name": "Bahadir Kisbet",
+        "url": "https://github.com/bahadirkisbet"
+      },
+      "license": "MIT",
+      "keywords": [
+        "secrets",
+        "mcp",
+        "automation"
       ]
     }
   ]
