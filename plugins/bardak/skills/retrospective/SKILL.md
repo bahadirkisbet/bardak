@@ -1,83 +1,38 @@
 ---
 name: retrospective
-description: Use when ending a long session, when the user says /retro or /retrospective, or after a session with multiple corrections, friction, or workarounds. Not for short sessions with no friction.
+description: Analyze recurring agent-workflow friction or explicit user corrections and propose narrowly scoped durable improvements. Use for requested retrospectives or a substantial session with lessons; ordinary completion alone does not require a write.
 ---
 
 # Retrospective
 
-Extract the non-obvious lessons from this session and persist them where they will prevent the same friction next time — with user approval.
+Turn demonstrated friction into the smallest useful correction. A retrospective can conclude that no new rule is needed.
 
-**Announce at start:** "Running retrospective to review this session for improvements."
+## Gather evidence
 
-## When to Use
+Start with user corrections, repeated failed attempts, misleading completion claims and successful recoveries. Distinguish direct observations and original user instructions from generated memories or summaries. Follow a selected source when a consequential claim needs corroboration; do not ingest every historical transcript.
 
-- User says /retro, /retrospective, or "let's wrap up."
-- End of a long session with corrections, friction, or workarounds.
-- Not needed for short sessions with no friction.
+For each candidate, state: symptom, evidence, likely cause, recurrence/scope and the behavior that would have prevented it. A single explicit correction can justify a narrow update; one anecdote does not justify a universal rule.
 
-## Step 1: Scan the Conversation for Signals
+## Put the fix at its owner
 
-- **Corrections** (strongest signal) — "no, not that", "don't do X", "stop doing Y".
-- **Friction** — repeated attempts, workarounds, confusion.
-- **New patterns** — approaches that worked and the user validated.
-- **Outdated docs** — instructions contradicted by what actually happened.
-- **Missing context** — information you needed but didn't have.
+| Cause | Destination |
+|---|---|
+| Wrong or duplicated skill procedure | Existing skill's canonical source |
+| Repo-specific convention or safeguard | Existing project policy, without duplicating it |
+| Broken installation, hook or tool dispatch | Tool/configuration repair, separately scoped |
+| Confirmed domain fact or personal preference | Authorized canonical project/personal knowledge source |
+| Unsupported inference or temporary state | Keep as an unresolved finding; do not promote it to a fact |
 
-## Step 2: Categorize and Filter
+A technique being reusable does not alone justify a new skill. Prefer correcting or removing an existing conflicting rule. Inspect where an active skill actually loads from; editing a source repository does not prove installed copies changed. Keep company facts, private incidents and customer data out of personal/global skills and memories; use synthetic general examples.
 
-| Destination | When | Where |
-|---|---|---|
-| Project instructions | Project-wide convention | `CLAUDE.md` (or your agent's project-instructions file) |
-| Rule | Domain-specific pattern for this repo | project rules dir (e.g. `.claude/rules/`) |
-| Skill | Reusable technique across ANY project | your skills dir (e.g. `.claude/skills/`) |
-| Personal memory | Cross-project personal preference | your global memory store |
+## Prepare a reviewable proposal
 
-**Categorization test:** "Would this help someone on a completely different project?" → Yes = Skill, not memory/rule.
+Show the current rule, demonstrated problem, exact proposed wording/diff, affected files and a scenario that would distinguish improvement from rewording. Include what should stop triggering as well as what should trigger.
 
-**STOP guard:** before writing a memory/rule for a reusable technique, check whether it belongs as a Skill instead.
+Reuse authorization already given for this scope; ask only where a decision or permission is missing. When the user requests preview before changes, stop after the proposal until approval arrives. Do not create new memory files, rewrite global instructions or install plugins merely because this skill was loaded.
 
-**Two-pass rule** — only persist if: an explicit correction, it appeared in 2+ sessions, the user asked to remember it, or it fills a clear documentation gap. One-off corrections rarely warrant persistence.
+## Apply only approved changes
 
-## Step 3: Verify Before Presenting
+After approval, reread the current files and preserve unrelated edits. Patch the canonical source, validate affected links/metadata and test representative behavior. Installation and publication are separate actions with their own targets and authorization; do not edit plugin cache as the source of truth.
 
-**Anti-hallucination guard — the #1 failure mode.** Agents fabricate "already saved" claims.
-
-- If you claim a file was created/updated, verify it exists (read it / list it) before claiming so.
-- If you cannot verify, do NOT claim it was persisted.
-- "I wrote X to Y" with no tool verification = hallucination.
-
-## Step 4: Present Summary and Get Approval
-
-```
-### Project-Instruction Updates
-- [file] — what changed and why
-
-### New Rules
-- [rule name] — what it enforces
-
-### Suggested Skills
-- [skill name] — what it teaches (cross-project patterns only)
-
-### Pruning
-- [file] — what's outdated and should be removed
-```
-
-Wait for user approval before applying.
-
-## Step 5: Apply Changes
-
-- Surgical edits to project instructions (append sections; don't rewrite).
-- Write new rule files to the rules dir.
-- For new skills, follow your skill-authoring process.
-- Update memory files with structured content.
-
-## Common Mistakes
-
-- Persisting everything — keep only non-obvious lessons that prevent future friction.
-- Rewriting instead of appending — changes to project instructions should be surgical.
-- Filing cross-project patterns as memories instead of Skills.
-- Claiming findings are saved without tool verification.
-- Dropping the structured format under time pressure.
-- Ignoring the two-pass rule — one-off corrections rarely warrant persistence.
-
-**Pairs with:** business facts you learn belong in `bardak:less-is-more`'s `.claude/business-context.md`; durable decisions belong in a `bardak:adr`.
+Verify the actual file content before saying it was saved. Report proposed, applied, installed and behaviorally tested separately. Avoid append-only rule accumulation: remove superseded wording when replacing it, and leave no conflicting active version.

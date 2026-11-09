@@ -1,69 +1,99 @@
 # bardak
 
-`bardak` is a [Claude Code](https://claude.com/claude-code) plugin: a small set of
-skills for people who spend serious time in Claude Code. They encode the reflexes that
-keep its output honest on real work — disciplined scrutiny, honest verification, and
-structural restraint. Each skill is a short, opinionated procedure Claude follows when
-the moment calls for it.
+Bardak is a small set of skills for Claude Code and Codex: independent review,
+honest evidence, useful error handling and restrained architecture decisions.
+Each skill handles a particular decision; ordinary tasks should not activate the
+entire collection.
 
-## The skills
+## Skills
 
-| Skill | What it does |
+| Skill | Use it for |
 |---|---|
-| **blind-review** | Final quality gate. Dispatches independent reviewers who never see the implementer's account of the work — only the code and, at most, one intent artifact: nothing (cold audit), the spec (compliance), or the plan (drift). They find the gap between intent and what was built. |
-| **retrospective** | At the end of a session, extracts the non-obvious lessons and persists them (project instructions / rules / skills / memory) so the same friction doesn't repeat. |
-| **less-is-more** | For architecture decisions: extract the intent, lay out explicit paths *before* tradeoffs, weigh them against accumulated **business context** — and learn the business a little more on every use. |
-| **more-is-less** | The disciplined counterweight to `less-is-more`: when a structural boundary — a schema, an integration/variant seam, a contract — has a *named* future need, invest in the seam now (a port, an extension point, a value type) so the next variant is additive, not a migration. Guards both failure modes: speculation is over-engineering; a hardcoded `if type == …` branch is under-engineering. |
-| **no-silent-errors** | A reflex: every error, failure, and fault path stays visible. Strong types first (make illegal states unrepresentable), then loud runtime failures. No swallowed exceptions, no empty defaults for required data. |
-| **verify-the-premise** | A behavior: never assume. Decide, suggest, and act on data — read the code, run it, trace the real path — not on what's expected to be true. |
-| **pipeline-verification** | A change isn't verified by unit tests alone. Map the blast radius, verify end to end through the real user-visible pipeline, and report honestly what was and wasn't checked. |
-| **bugfix-tdd** | No bug fix without a failing test that reproduces it first. Red, then fix, then green, then confirm no regressions. |
-| **adr** | Capture a significant, hard-to-reverse decision as a short, immutable Architecture Decision Record — context, options, consequences — stored one-per-file in `docs/adr/`. Search existing ADRs before re-deciding. |
+| **blind-review** | Independent review of a specific change and its requirements, with verified findings and explicit coverage. |
+| **verify-the-premise** | Checking a material claim before it justifies an action; distinguishing observation, inference and missing evidence. |
+| **bugfix-tdd** | Behavioral regression proof: observed failure on buggy code, minimal fix, observed pass and relevant surrounding checks. |
+| **pipeline-verification** | Evidence at the changed boundary, with the actual running target, side effects, cleanup and unverified stages accounted for. |
+| **no-silent-errors** | Keeping failure distinct from legitimate absence, with explicit recovery and safe error visibility. |
+| **less-is-more** | Comparing viable designs against the user's goal, current system and business constraints. |
+| **more-is-less** | A small seam justified by a named consumer or evolution cost, preserving required correctness protections. |
+| **adr** | Reading relevant decisions before structural work, checking conformance and recording significant decisions or explicit supersession. |
+| **retrospective** | Turning demonstrated friction into a concrete, scoped improvement proposal. |
 
-## Install
+## Scope and completion
 
-bardak is one marketplace, and the two big agentic CLIs read the same manifest — so the
-install is the same two steps on each: add the marketplace, then install the plugin.
+Skills do not expand the user's authorization or replace repository policy. A review
+can remain read-only; a preview stops before application; verification does not imply
+deployment. Reuse evidence already gathered for the same unchanged target. Load a
+related skill only when its workflow is needed, not merely because it is linked.
+
+Use the project's designated knowledge source. A consultation with no new confirmed
+knowledge requires no memory write. Keep company and personal context separate.
+
+## Install and invoke
 
 ### Claude Code
 
 ```bash
 claude plugin marketplace add bahadirkisbet/bardak
-claude plugin install bardak
+claude plugin install bardak@bardak
 ```
 
-Or, from inside Claude Code:
-
-```
-/plugin marketplace add bahadirkisbet/bardak
-/plugin install bardak@bardak
-```
+From Claude Code, the corresponding commands are `/plugin marketplace add
+bahadirkisbet/bardak` and `/plugin install bardak@bardak`. Invoke plugin skills with
+their namespace, for example `/bardak:blind-review` or `/bardak:retrospective`.
+Unqualified commands may select a different local skill.
 
 ### Codex
 
-Codex (CLI ≥ 0.139) reads the same marketplace:
+On a CLI exposing these plugin commands:
 
 ```bash
 codex plugin marketplace add bahadirkisbet/bardak
 codex plugin add bardak@bardak
 ```
 
-Or, from inside Codex: open `/plugins`, pick the **bardak** marketplace, install **bardak**,
-then start a new thread. (This same install also covers the Codex desktop app — restart it
-after installing and it picks up the plugin.)
+Use `/plugins` or the installed CLI's help to inspect support and installation.
+For local discovery, pinning and invocation differences, see [Codex usage](docs/codex.md).
 
-Either way, skills activate on their own when the situation matches their description, or
-you can invoke one directly (e.g. `/blind-review`, `/retrospective`, `/adr`).
+Both hosts can select skills from their descriptions. Inspect the active skill path
+and start a fresh session when checking an update. A changed source checkout does not
+prove copied skills or a versioned plugin cache were updated. Do not edit cache files
+as the canonical source or remove another installation without examining its purpose.
 
-For per-project pinning or wiring the skills into an `AGENTS.md` by hand, see
-[docs/codex.md](docs/codex.md).
+## ASM: Agentic Secret Manager
 
-## A note on `less-is-more` and memory
+The same marketplace also lists **`asm@bardak`**, a Claude Code/Codex plugin for
+capturing and delivering credentials without returning their values to chat.
+The catalog entry is public; the implementation and native binaries remain in
+the private `bahadirkisbet/asm` repository. Installation requires an SSH identity
+with access to that repository. Adding bardak alone does not grant that access.
 
-`less-is-more` reads and appends to a project-local note at `.claude/business-context.md`.
-Keep that file in your repo — it's how the skill compounds: every architecture decision
-teaches it a little more about your domain, so its tradeoffs get more aligned with the
-business over time. It's git-trackable on purpose, so a team shares the same context.
+After adding this marketplace, install ASM with:
+
+```bash
+claude plugin marketplace update bardak
+claude plugin install asm@bardak
+
+codex plugin marketplace upgrade bardak
+codex plugin add asm@bardak
+```
+
+The entry pins a specific ASM commit and installs its `plugins/asm` package.
+ASM requires Python 3.9+ and supports macOS Apple Silicon/Intel and Linux x86_64.
+Restart existing sessions after installation. Existing bardak skills are a
+separate plugin and remain available without ASM repository access.
+
+## Validate changes
+
+Keep the version manifests consistent with `scripts/bump-version.sh --check`.
+Check frontmatter, links and representative behavior using
+[the scenario matrix](docs/skill-evaluation.md). Metadata checks do not prove that
+instructions activate or lead to the right actions in either host.
+
+Publishing is a separate action: see [RELEASE.md](RELEASE.md).
+
+References: [Claude Code skills](https://code.claude.com/docs/en/skills),
+[OpenAI skill design](https://developers.openai.com/plugins/build/skills).
 
 ## License
 

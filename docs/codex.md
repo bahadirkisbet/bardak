@@ -1,71 +1,64 @@
-# Using bardak with Codex
+# Using Bardak with Codex
 
-bardak ships as a marketplace plugin, and Codex (CLI ≥ 0.139) reads the same
-`marketplace.json` manifest that Claude Code does — so the recommended install
-is the marketplace, identical to Claude Code. The older per-project copy is kept
-below as a fallback for pinning, offline use, or older Codex.
+Bardak's skills are Markdown workflows. Their instructions are portable; discovery,
+invocation and installation depend on the host. Check the actual loaded path before
+assuming an update took effect. Avoid maintaining both a copied and plugin-provided
+version of the same skill unless that duplication is deliberate.
 
-## Install (marketplace — recommended)
+## Marketplace installation
+
+On a Codex CLI exposing the `plugin marketplace` and `plugin add` commands:
 
 ```bash
 codex plugin marketplace add bahadirkisbet/bardak
 codex plugin add bardak@bardak
 ```
 
-Or, from inside Codex: open `/plugins`, pick the **bardak** marketplace, install
-**bardak**, then start a new thread. The Codex desktop app uses the same install —
-restart it afterward and it picks up the plugin.
+Check `codex plugin --help` and `codex plugin marketplace --help` for the installed
+CLI's supported operations. The plugin selector is also available through `/plugins`.
+Check the selected plugin's installation state, then start a fresh session and inspect
+its skill paths. Command availability is not proof this package installed or activated.
+Do not infer a minimum supported version from an untested older release.
 
-Skills then activate on their own when the situation matches, or you invoke one
-directly (`/blind-review`, `/adr`, …) — no `AGENTS.md` wiring needed.
+## Project-local authoring or pinning
 
-To update later: `codex plugin marketplace upgrade` then `codex plugin add bardak@bardak`.
+Current Codex documentation lists `.agents/skills/` for repository skills. Copy a
+chosen revision's complete skill folders from `plugins/bardak/skills/` into that
+location after checking for existing files. Preserve local changes and record the
+source revision. Do not blindly copy over an existing installation on update.
 
-## Install (per-project vendoring — fallback)
+Current Codex documentation also lists `~/.agents/skills/` for user skills. Older
+installations may already expose copies elsewhere; inspect the current session's
+skill catalog rather than deleting or migrating those copies automatically.
 
-Use this when you want the skills pinned in the repo (offline, air-gapped, or a
-Codex too old for the marketplace). The `SKILL.md` files are plain Markdown, so a
-copy works:
+Codex can discover these skill directories without adding the full procedures to
+`AGENTS.md`. Duplicating the procedure there creates a second version to maintain.
+If a repository requires explicit routing, reference the installed skill path and
+its actual purpose, not an obsolete checklist.
 
-```bash
-# 1. clone bardak somewhere
-git clone https://github.com/bahadirkisbet/bardak ~/.bardak
+Invoke a locally discovered skill with its displayed name, for example
+`$blind-review`. When plugin qualification differs, use the name shown by the host's
+skill selector. Do not assume Claude's slash-command syntax is interchangeable.
 
-# 2. copy the skills into this project's .codex/skills/
-mkdir -p .codex/skills
-cp -R ~/.bardak/plugins/bardak/skills/* .codex/skills/
-```
+## Shared behavior and knowledge
 
-To update later: `git -C ~/.bardak pull` then re-run the copy.
+- Preserve higher-priority instructions, the user's scope and existing authorization.
+- For independent review, use a fresh context with only the review task and required
+  raw artifacts. In a Codex harness exposing `fork_turns`, use `"none"`; another harness
+  may expose a different mechanism. A second pass with inherited history is not blind.
+- Use the available tool capabilities. Missing delegation is a disclosed review
+  limitation, not permission to call a self-review independent.
+- Use the project's canonical knowledge source for both agents. Do not split business
+  facts into `.claude/business-context.md` and `.codex/business-context.md`.
+- Source edit, installed-copy update, skill discovery and behavior verification are
+  separate states. Report which ones were checked.
 
-### Wire them into AGENTS.md
+## Verify a proposed update
 
-A vendored copy isn't auto-discovered — point Codex at it from your `AGENTS.md`:
+Validate metadata and links, inspect the entire affected skills, and use
+[the scenario matrix](skill-evaluation.md). Run a harmless representative task in a
+fresh session before claiming runtime verification. Do not overwrite global skills,
+install, publish or change hook configuration as a side effect of an audit.
 
-```markdown
-## Skills
-
-Read the relevant skill before the matching task:
-
-- `.codex/skills/blind-review/SKILL.md` — final spec-only review gate
-- `.codex/skills/retrospective/SKILL.md` — end-of-session lesson capture
-- `.codex/skills/less-is-more/SKILL.md` — architecture paths + business-context memory
-- `.codex/skills/more-is-less/SKILL.md` — invest in a boundary now when a future need is named
-- `.codex/skills/no-silent-errors/SKILL.md` — strong types, no swallowed errors (apply always)
-- `.codex/skills/verify-the-premise/SKILL.md` — never assume; act on data (apply always)
-- `.codex/skills/pipeline-verification/SKILL.md` — verify end to end, map blast radius
-- `.codex/skills/bugfix-tdd/SKILL.md` — failing test first, then fix
-- `.codex/skills/adr/SKILL.md` — record significant decisions
-```
-
-Keep `.codex/skills/` in version control so your team shares the same skills.
-
-## Notes
-
-- The `SKILL.md` files are platform-neutral — no Claude-only tool names — so they
-  read the same under Codex. The one Claude-specific touch is **blind-review**'s
-  "second reviewer via MCP"; under Codex, run the second reviewer as a second
-  Codex pass, or skip it and note so.
-- `less-is-more` writes to `.claude/business-context.md` by default. Under Codex,
-  either keep that path or point it at `.codex/business-context.md` — just be
-  consistent so the memory accumulates in one place.
+References: [OpenAI skill discovery](https://learn.chatgpt.com/docs/build-skills),
+[OpenAI skill design and testing](https://developers.openai.com/plugins/build/skills).
