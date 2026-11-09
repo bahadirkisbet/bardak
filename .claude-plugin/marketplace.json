@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "bardak \u2014 skills and tools for Claude Code and Codex.",
-    "version": "0.4.0"
+    "version": "0.4.1"
   },
   "plugins": [
     {
       "name": "bardak",
       "source": "./plugins/bardak",
       "description": "Blind review, retrospective, less-is-more architecture, more-is-less structural investment, no silent errors, verify the premise, pipeline verification, bugfix TDD, ADR.",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "author": {
         "name": "Bahadir Kisbet",
         "url": "https://github.com/bahadirkisbet"
@@ -30,11 +30,11 @@
       "name": "asm",
       "source": {
         "source": "git-subdir",
-        "url": "git@github.com:bahadirkisbet/asm.git",
+        "url": "https://github.com/bahadirkisbet/asm.git",
         "path": "plugins/asm",
-        "sha": "b6d99ec495cef62ec3a248003cdff5f045a9dffc"
+        "sha": "6ec24d10930b1f8a229e0b3558bcfa68a0dfe956"
       },
-      "description": "Agentic Secret Manager: capture and deliver credentials without plaintext tool responses. Private repository access required.",
+      "description": "Agentic Secret Manager: capture and deliver credentials without plaintext tool responses. Public source and bundled native binaries.",
       "version": "0.1.2",
       "author": {
         "name": "Bahadir Kisbet",

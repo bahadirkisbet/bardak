@@ -64,9 +64,9 @@ as the canonical source or remove another installation without examining its pur
 
 The same marketplace also lists **`asm@bardak`**, a Claude Code/Codex plugin for
 capturing and delivering credentials without returning their values to chat.
-The catalog entry is public; the implementation and native binaries remain in
-the private `bahadirkisbet/asm` repository. Installation requires an SSH identity
-with access to that repository. Adding bardak alone does not grant that access.
+The source and native binaries are public in
+[`bahadirkisbet/asm`](https://github.com/bahadirkisbet/asm). Installation fetches
+a pinned commit over HTTPS and needs no GitHub account or SSH key.
 
 After adding this marketplace, install ASM with:
 
@@ -81,7 +81,7 @@ codex plugin add asm@bardak
 The entry pins a specific ASM commit and installs its `plugins/asm` package.
 ASM requires Python 3.9+ and supports macOS Apple Silicon/Intel and Linux x86_64.
 Restart existing sessions after installation. Existing bardak skills are a
-separate plugin and remain available without ASM repository access.
+separate plugin; install each plugin you want to use.
 
 ## Validate changes
 
