@@ -1,6 +1,6 @@
 # Bardak skill behavior verification — 2026-11-09
 
-Status: source changes implemented and tested locally; not installed or published.
+Evaluation snapshot: source changes implemented and tested locally before publication; installation was not tested.
 Base: `d7fad8ce066d33bd890d399e530e86625bcb8c82`.
 Branch: `codex/skills-evidence-adr`.
 
@@ -130,7 +130,7 @@ to reuse an existing run directory. These are local evaluation artifacts, not pl
 No private incident transcripts or company fixtures were copied into this repository.
 
 Static validation: nine skill frontmatters pass `quick_validate.py`; relative links resolve;
-`git diff --check` and the unchanged 0.3.0 manifest consistency check pass. Independent
+`git diff --check` and, at evaluation time, the unchanged 0.3.0 manifest consistency check passed. Release preparation separately bumps the manifests to 0.4.0 and checks the version helper against a multi-plugin catalog. Independent
 full-file review reported no material findings. These checks are distinct from the observed
 behavior above and do not establish publication readiness for untested configurations.
 

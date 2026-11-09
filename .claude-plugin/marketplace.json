@@ -5,15 +5,15 @@
     "url": "https://github.com/bahadirkisbet"
   },
   "metadata": {
-    "description": "bardak — quality and discipline skills for people who live in Claude Code.",
-    "version": "0.3.0"
+    "description": "bardak \u2014 skills and tools for Claude Code and Codex.",
+    "version": "0.4.0"
   },
   "plugins": [
     {
       "name": "bardak",
       "source": "./plugins/bardak",
       "description": "Blind review, retrospective, less-is-more architecture, more-is-less structural investment, no silent errors, verify the premise, pipeline verification, bugfix TDD, ADR.",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": {
         "name": "Bahadir Kisbet",
         "url": "https://github.com/bahadirkisbet"
@@ -24,6 +24,27 @@
         "quality",
         "architecture",
         "verification"
+      ]
+    },
+    {
+      "name": "asm",
+      "source": {
+        "source": "git-subdir",
+        "url": "git@github.com:bahadirkisbet/asm.git",
+        "path": "plugins/asm",
+        "sha": "b6d99ec495cef62ec3a248003cdff5f045a9dffc"
+      },
+      "description": "Agentic Secret Manager: capture and deliver credentials without plaintext tool responses. Private repository access required.",
+      "version": "0.1.2",
+      "author": {
+        "name": "Bahadir Kisbet",
+        "url": "https://github.com/bahadirkisbet"
+      },
+      "license": "MIT",
+      "keywords": [
+        "secrets",
+        "mcp",
+        "automation"
       ]
     }
   ]
